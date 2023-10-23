@@ -1,0 +1,13 @@
+@vite(['resources/sass/app.scss',
+'resources/js/app.js',
+'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback',
+'node_modules/admin-lte/plugins/fontawesome-free/css/all.min.css',
+'node_modules/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css',
+'node_modules/admin-lte/dist/css/adminlte.min.css',
+'node_modules/admin-lte/plugins/jquery/jquery.min.js',
+'node_modules/admin-lte/plugins/jquery/jquery.min.js',
+'node_modules/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js',
+'node_modules/admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js',
+'node_modules/admin-lte/dist/js/adminlte.min.js',
+'node_modules/admin-lte/dist/js/demo.js',
+])
