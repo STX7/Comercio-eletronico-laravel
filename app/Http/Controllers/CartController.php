@@ -15,7 +15,7 @@ class CartController extends Controller
     {
         $cartItems = Cart::getContent();
         $troco = 0;
-        return view('cart',compact('cartItems','troco'));
+        return view('cart.index',compact('cartItems','troco'));
     }
 
     /**
@@ -23,7 +23,47 @@ class CartController extends Controller
      */
     public function create()
     {
-        //
+        $cartItems = Cart::getContent();
+        $id_user = auth()->id();
+        $quantidade = Cart::getTotalQuantity();
+
+        try {
+                Sale::create([
+                'total' => $request->total,
+                'itens'=> $quantidade,
+                'cash' => $request->recebido,
+                'change' => $request->troco,
+                'user_id' => $id_user
+                ]);
+
+                $idCompra = DB::table('sales')
+                ->orderByRaw('created_at DESC')
+                ->get()->first();
+
+                //insere produtos na tabela Sale_datails
+
+                foreach ($cartItems as $item) {
+
+                    $item->id;
+                    SaleDetails::create ([
+                        'price'=>$item->price,
+                        'quantity'=>$item->quantity,
+                        'product_id'=>$item->id,
+                        'sale_id'=>$idCompra->id
+                    ]) ;
+                }
+
+                //limpa o carrinho atual
+                Cart::clear();
+
+                //envia informações para a tabela de vendas
+                $sales = Sale::get();
+                return view('sale_list', compact('sales'));
+
+
+        } catch (\Throwable $th) {
+            return view('404', compact('th'));
+        }
     }
 
     /**
@@ -123,6 +163,7 @@ class CartController extends Controller
         $cartItems = Cart::getContent();
         return view('cart', compact('cartItems'));
     }
+
     public function cartTroco(Request $request)
     {
         $troco = 0;
