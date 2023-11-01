@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
+use Exception;
 
 class CategoryController extends Controller
 {
@@ -57,19 +59,20 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Category $category)
     {
-        return view('categories.edit')->with('category',$category);
+
+        return view('admin.categories.alt')->with('category',$category);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Category $category)
     {
         $category->name = $request->name;
-            $category->description = $request->description;
-
+        $category->description = $request->description;
+        $category->deduction = $request->deduction;
 
 
         if (!$category->save()) {
@@ -82,7 +85,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
         try{
             if (!$category->delete()) {

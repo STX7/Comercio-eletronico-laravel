@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\models\Product;
-use app\models\Category;
+use App\Models\Product;
+use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
     /**
@@ -12,8 +13,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $categorias = Category::get();
-        return view('product.list',['categorias' => $categorias]);
+        $category = Category::get();
+        $product = Product::get();
+        return view('admin.products.list',compact('category','product'));
     }
 
     /**
@@ -21,17 +23,8 @@ class ProductController extends Controller
      */
     public function create(Request $request)
     {
-        Product::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'image' => $request->image,
-            'barcode' => $request->barcode,
-            'price' => $request->price,
-            'quantity' => $request->quantity,
-            'status' => $request->status,
-            'category_id' => $request->category_id,
-            'photo' => $request->photo,
-        ]);
+        $categories = Category::get();
+        return view('admin.products.add')->with('categories', $categories);
     }
 
     /**
@@ -39,7 +32,27 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $image_path = '';
+
+        if ($request->hasFile('image')) {
+            $image_path = $request->file('image')->store('products', 'public');
+        }
+
+        $product = Product::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'image' => $image_path,
+            'barcode' => $request->barcode,
+            'price' => $request->price,
+            'quantity' => $request->quantity,
+            'status' => $request->status,
+            'category_id'=> $request->category_id,
+        ]);
+
+        if (!$product) {
+            return redirect()->back()->with('error', 'Desculpe, Houve um problema ao cadastrar produto.');
+        }
+        return redirect()->route('products.index')->with('success', 'Sucesso, produto cadastrado com sucesso.');
     }
 
     /**
@@ -57,43 +70,51 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $categorias = Category::get();
-        $products = Product::findOrFail($id);
-        return view('product_change',compact('products','categorias'));
+        $categories = Category::get();
+        $product = Product::findOrFail($id);
+        return view('admin.products.alt',compact('product','categories'));
     }
-        //pesquisar produto por código ou nome
     public function search(String $pesquisa)
     {
         $produtos = Product::where('name', 'like', "%{$pesquisa}%")->orWhere('code', 'like', "%{$pesquisa}%")->get();
-        //$produtos = Product::get();
         return $produtos;
     }
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
-        $products = Product::findOrFail($id);
+        $product->name = $request->name;
+        $product->description = $request->description;
+        if (($product->barcode) != ($request->barcode)) {
+            $product->barcode = $request->barcode;
+        }
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+        $product->status = $request->status;
+        $product->category_id = $request->category;
+        $product->validity = $request->validity;
+        $product->company = $request->company;
+        $product->provider = $request->provider;
+        $product->quantify = $request->quantify;
+        $product->cost = $request->cost;
 
-        if($request != null){
+        if ($request->hasFile('image')) {
+            // Delete old image
+            if ($product->image) {
+                Storage::delete($product->image);
+            }
+            // Store image
+            $image_path = $request->file('image')->store('products', 'public');
+            // Save to Database
+            $product->image = $image_path;
 
-        Product::update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'image' => $request->image,
-            'barcode' => $request->barcode,
-            'price' => $request->price,
-            'quantity' => $request->quantity,
-            'status' => $request->status,
-            'category_id' => $request->category_id,
-            'photo' => $request->photo,
-        ]);
+        }
 
-        return redirect('/product_list');
-
-    }else{
-        return redirect('/404');
-    }
+        if (!$product->save()) {
+            return redirect()->back()->with('error', 'Desculpe, Aconteceu um problema ao atualizar produto.');
+        }
+        return redirect()->route('products.index')->with('Sucesso', 'Produto foi atualizado com sucesso.');
     }
 
     public function destroy($id)

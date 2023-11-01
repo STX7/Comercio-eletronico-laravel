@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\AddressController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +27,6 @@ Route::get('/', function () {
 Route::get('/contato', function () {
     return view('ecommerce.contact');
 });
-
 Route::get('/loja', function () {
     return view('ecommerce.shop');
 });
@@ -64,6 +67,8 @@ require __DIR__.'/auth.php';
 Route::get('/admin', function () {
     return view('admin.dashboard');
 });
-Route::get('/admin/produtos', function () {
-    return view('admin.products.list');
-});
+
+Route::resource('categories', CategoryController::class);
+Route::resource('products', ProductController::class);
+Route::resource('addresses', AddressController::class);
+Route::resource('favorites', FavoriteController::class);
