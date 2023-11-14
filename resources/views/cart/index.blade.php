@@ -36,7 +36,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="d-flex align-items-center mb-5">
                     <div class="flex-shrink-0">
                       <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/6.webp"
@@ -137,9 +136,10 @@
                         <div class="">
 
                             <br>
-                            <form action="{{ route('sale.register') }}" method="POST">
+                            <form action="{{ route('cart.create') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="total" value="{{Cart::getTotal()}}" >
+                                <input type="hidden" name="quatity" value="1" >
                                 <button class="border-0 btn btn-success text-whiter">Finalizar venda</button>
                               </form>
 

@@ -21,10 +21,10 @@
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
               </p>
               <div class="btn-box">
-                <a href="/produto" class="btn1">
+                <a href="{{ route('products') }}" class="btn1">
                   Compre agora
                 </a>
-                <a href="/quem_somos" class="btn2">
+                <a href="{{ route('why') }}" class="btn2">
                   Veja mais
                 </a>
               </div>
@@ -44,106 +44,35 @@
         </h2>
       </div>
       <div class="row">
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="/produto">
-              <div class="img-box">
-                <img src="images/p1.png" alt="">
+        @foreach ($product as $products)
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="box">
+                <a href="{{ route('ecommerce.show',$products) }}">
+                  <div class="img-box">
+                    <img src="images/p1.png" alt="">
+                  </div>
+                  <div class="detail-box">
+                    <h6>
+                      {{ $products->name }}
+                    </h6>
+                    <h6>
+                      Preço
+                      <span>
+                        {{ $products->price }}
+                      </span>
+                    </h6>
+                  </div>
+                  <div class="new">
+                    <span>
+                      Novo
+                    </span>
+                  </div>
+                </a>
               </div>
-              <div class="detail-box">
-                <h6>
-                  Anel
-                </h6>
-                <h6>
-                  Preço
-                  <span>
-                    R$200
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  Novo
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="/produto">
-              <div class="img-box">
-                <img src="images/p2.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Relógio
-                </h6>
-                <h6>
-                  Preço
-                  <span>
-                    R$300
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  Novo
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="/produto">
-              <div class="img-box">
-                <img src="images/p3.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Urso de pelúcia
-                </h6>
-                <h6>
-                  Preço
-                  <span>
-                    R$110
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  Novo
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="/produto">
-              <div class="img-box">
-                <img src="images/p4.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Rosas decorativas
-                </h6>
-                <h6>
-                  Preço
-                  <span>
-                    R$45
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  Novo
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
+            </div>
+        @endforeach
+    </div>
+</div>
 
   </section>
 
@@ -173,10 +102,10 @@
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
               </p>
               <div class="btn-box">
-                <a href="/produto" class="btn1">
+                <a href="{{ route('products') }}" class="btn1">
                   Compre agora
                 </a>
-                <a href="/quem_somos" class="btn2">
+                <a href="{{ route('why') }}" class="btn2">
                   Saiba mais
                 </a>
               </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Exception;
 class UserController extends Controller
 {
     /**
@@ -11,7 +12,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::get();
+        return view('admin.users.list')->with('users', $users);
     }
 
     /**
@@ -19,19 +21,7 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
-        if($request->password1 == $request->password2){
-            $hash_senha = bcrypt($request->password1);
-            User::create([
-                'name'=>$request->name,
-                'email'=>$request->email,
-                'password'=>$hash_senha,
-                'phone'=>$request->telefone,
-                'profile'=>$request->permissao,
-            ]);
-            return redirect('/user_list');
-        }else{
-            return redirect('/404');
-        }
+        return view('admin.users.add');
     }
 
     /**
@@ -53,9 +43,9 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $users)
     {
-        //
+        return view('admin.users.alt')->with('users',$users);
     }
 
     /**
@@ -69,8 +59,16 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        try{
+            if (!$user->delete()) {
+                return redirect()->back()->with('error', 'Desculpe, Aconteceu um problema ao deletar categoria.');
+               }else{
+                    return redirect()->route('categories.index')->with('Sucesso', 'Categoria foi deletada com sucesso.');
+               }
+        }catch (Exception $e) {
+            return redirect()->back()->with('error', 'Categoria não pode ser deletada, existem produtos nela.');
+        }
     }
 }

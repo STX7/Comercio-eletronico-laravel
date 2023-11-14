@@ -2,7 +2,7 @@
     <!-- header section strats -->
     <header class="header_section">
       <nav class="navbar navbar-expand-lg custom_nav-container ">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="{{ route('index') }}">
           <span>
             Expand Informática
           </span>
@@ -14,26 +14,26 @@
         <div class="collapse navbar-collapse innerpage_navbar" id="navbarSupportedContent">
           <ul class="navbar-nav  ">
             <li class="nav-item ">
-              <a class="nav-link" href="/welcome">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="{{ route('index') }}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/loja">
+              <a class="nav-link" href="{{ route('products') }}">
                 Loja
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/quem_somos">
+              <a class="nav-link" href="{{ route('why') }}">
                 Quem somos
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/contato">Contato</a>
+              <a class="nav-link" href="{{ route('mensage') }}">Contato</a>
             </li>
           </ul>
 
           <div class="user_option">
             @auth
-            <a href="/profile">
+            <a href="{{ route('dashboard') }}">
                 <i class="fa fa-user" aria-hidden="true"></i>
                 <span>
                     Perfil
@@ -42,13 +42,13 @@
             @endauth
 
             @guest
-            <a href="/login">
+            <a class="nav-link" href="{{ route('login') }}">
                 <span>
                   Login
                 </span>
               </a>
             @endguest
-            <a href="/cart">
+            <a href="{{ route('cart.index') }}">
               <i class="fa fa-shopping-bag" aria-hidden="true"></i>
             </a>
             <form class="form-inline ">

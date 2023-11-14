@@ -11,26 +11,26 @@
           </div>
           <div class="d-flex justify-content-center mb-3">
             <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big1.webp" class="item-thumb">
-              <img width="60" height="60" class="rounded-2" src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big1.webp" />
+              <img width="60" height="60" class="rounded-2" src="" />
             </a>
             <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big2.webp" class="item-thumb">
-              <img width="60" height="60" class="rounded-2" src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big2.webp" />
+              <img width="60" height="60" class="rounded-2" src="" />
             </a>
             <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big3.webp" class="item-thumb">
-              <img width="60" height="60" class="rounded-2" src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big3.webp" />
+              <img width="60" height="60" class="rounded-2" src="" />
             </a>
             <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big4.webp" class="item-thumb">
-              <img width="60" height="60" class="rounded-2" src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big4.webp" />
+              <img width="60" height="60" class="rounded-2" src="" />
             </a>
             <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big.webp" class="item-thumb">
-              <img width="60" height="60" class="rounded-2" src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big.webp" />
+              <img width="60" height="60" class="rounded-2" src="" />
             </a>
           </div>
         </aside>
         <main class="col-lg-6">
           <div class="ps-lg-3">
             <h4 class="title text-dark">
-              Camisa social<br />
+              {{ $product->name }}<br />
             </h4>
             <div class="d-flex flex-row my-3">
               <div class="text-warning mb-1 me-2">
@@ -48,7 +48,7 @@
             </div>
 
             <div class="mb-3">
-              <span class="h5">R$75.00</span>
+              <span class="h5">R${{ $product->price }}</span>
               <span class="text-muted">/por quantidade</span>
             </div>
 
@@ -95,8 +95,9 @@
                 </div>
               </div>
             </div>
-            <a href="#" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> Adicionar ao carrinho</a>
+            <a href="{{ route('cart.store',$product) }}" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> Adicionar ao carrinho</a>
             <a href="#" class="btn btn-light border border-secondary py-2 icon-hover px-3"> <i class="me-1 fa fa-heart fa-lg"></i> Adicionar aos favoritos </a>
+
           </div>
         </main>
       </div>
