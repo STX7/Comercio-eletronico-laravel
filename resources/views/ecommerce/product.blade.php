@@ -71,7 +71,8 @@
             </div>
 
             <hr />
-
+            <form action="{{ route('cart.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
             <div class="row mb-4">
               <div class="col-md-4 col-6">
                 <label class="mb-2">Tamanho</label>
@@ -82,22 +83,25 @@
                 </select>
               </div>
               <!-- col.// -->
+
               <div class="col-md-4 col-6 mb-3">
                 <label class="mb-2 d-block">Quantidade</label>
                 <div class="input-group mb-3" style="width: 170px;">
-                  <button class="btn btn-white border border-secondary px-3" type="button" id="button-addon1" data-mdb-ripple-color="dark">
+                  <button class="btn btn-white border border-secondary px-3" type="button" id="menos" onclick="less()" data-mdb-ripple-color="dark">
                     <i class="fas fa-minus"></i>
                   </button>
-                  <input type="text" class="form-control text-center border border-secondary" placeholder="14" aria-label="Example text with button addon" aria-describedby="button-addon1" />
-                  <button class="btn btn-white border border-secondary px-3" type="button" id="button-addon2" data-mdb-ripple-color="dark">
+                  <input type="text" id="num" class="form-control text-center border border-secondary" value="" name="quantity" aria-label="Example text with button addon" aria-describedby="button-addon1" />
+                  <button class="btn btn-white border border-secondary px-3" type="button" id="mais" onclick="more()" data-mdb-ripple-color="dark">
                     <i class="fas fa-plus"></i>
                   </button>
                 </div>
               </div>
             </div>
-            <a href="{{ route('cart.store',$product) }}" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> Adicionar ao carrinho</a>
-            <a href="#" class="btn btn-light border border-secondary py-2 icon-hover px-3"> <i class="me-1 fa fa-heart fa-lg"></i> Adicionar aos favoritos </a>
+            <input type="hidden" value="{{ $product->id }}" name="id">
 
+            <button class="btn btn-primary shadow-0" type="submit"><i class="me-1 fa fa-shopping-basket"></i> Adicionar ao carrinho</button>
+            <a href="#" class="btn btn-light border border-secondary py-2 icon-hover px-3"> <i class="me-1 fa fa-heart fa-lg"></i> Adicionar aos favoritos </a>
+            </form>
           </div>
         </main>
       </div>
@@ -189,4 +193,28 @@
       </div>
     </div>
   </section>
+  <script>
+    numero = 1;
+
+function less() {
+  numero--;
+  if (numero < 1) {
+    numero = 1;
+  } else {
+    setValue(numero);
+  }
+}
+
+function more() {
+  numero++;
+  setValue(numero);
+
+}
+
+function setValue(value) {
+  document.getElementById('num').value = value;
+}
+
+setValue(numero);
+  </script>
   @endsection

@@ -64,9 +64,9 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, String $id)
+    public function store(Request $request)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::findOrFail($request->id);
         if($product != null){
             Cart::add([
                 'id' => $product->id,
@@ -77,7 +77,6 @@ class CartController extends Controller
                     'image' => $product->image,
                 )
             ]);
-
             return redirect()->route('cart.index');
         }else{
             return redirect('error.404');
